@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown to Heart Challenger</title>
+  <style>
+    /* Font */
+    @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+    body {
+      margin:0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url("background.png"); /* Background image */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center; 
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+
+    /* Time text CSS */
+    #time {
+      text-align: center;
+      font-size: 24vmin;
+      position: absolute;
+      padding-top: 63vmin;
+      width: 100%;
+      color: #bd1e2e;
+      font-family: 'Lobster', cursive;
+    }
+  </style>
+</head>
+<body>
+  <span id="time">Loading...</span>
+
+
+  <script>
+
+    // Set countdown in UTC Time (YYYY-MM-DDTHH:mm:ssZ)
+    var countDownDate = new Date("2021-02-14T02:00:00Z").getTime()
+
+    // Update the count down every second
+    var x = setInterval(function() {
+
+      // Get todays date and time
+      var now = new Date().getTime();
+      
+      // Calc how long to go
+      var diff = countDownDate - now;
+
+      // Time calculations for days
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var daysDec = Math.ceil(diff / (1000 * 60 * 60 * 24) *10)/10;
+
+      // Output
+
+      var output = ""; 
+
+      if (daysDec==1 && days != 0) { // If "1 Day"
+        output += daysDec + " Day"
+          
+      } else if (days >= 1) { // If days
+        output += daysDec + " Days"
+      } else { // Less than one day
+
+        // Time calculations H m s
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+
+        
+        if (hours != 0) {
+          output += hours + ":"
+        }
+
+        if (hours != 0 && minutes < 10) {
+            output += "0"
+        }
+        if (minutes != 0) {
+          output += minutes + ":"
+        }
+
+        if ((hours != 0 || minutes != 0) && seconds < 10) {
+            output += "0"
+        }
+
+          output += seconds
+
+
+      }
+
+      // Display time
+      document.getElementById("time").innerHTML = output;
+      
+      // When the countdown is finished, show it as released
+      if (diff < 1000) {
+          clearInterval(x);
+          document.getElementById("time").innerHTML = "Released";
+      }
+    }, 1000);
+
+  </script>
+</body>
+</html>
